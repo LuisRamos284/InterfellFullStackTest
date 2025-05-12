@@ -1,7 +1,9 @@
 {
   "private": true,
   "scripts": {
+    "migrate:api": "cd apps/api && npx sequelize-cli db:migrate && cd ../..",
     "build:commons": "turbo run build --filter=commons",
+    "setup": "npm i",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",

@@ -5,7 +5,6 @@
   "main": "dist/index.js",
   "types": "dist/index.js",
   "scripts": {
-    "install": "npm i",
     "clean": "del ./dist/*",
     "build": "npm run clean && tsc",
     "dev": "tsc --watch",

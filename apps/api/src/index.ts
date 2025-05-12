@@ -1,9 +1,9 @@
 import express, { Request, Response } from "express";
-import dotenv from "dotenv";
-import { TEST_MESSAGE } from "commons";
+import 'dotenv/config'
 
-// configures dotenv to work in your application
-dotenv.config();
+import { TEST_MESSAGE } from "commons";
+import { sequelize } from "./config/sql";
+
 const app = express();
 
 const PORT = process.env.PORT;
@@ -20,3 +20,13 @@ app
     // gracefully handle error
     throw new Error(error.message);
   });
+
+// Test Connection
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Connection has been established successfully.");
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
+})();

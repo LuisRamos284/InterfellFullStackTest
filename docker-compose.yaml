@@ -1,0 +1,47 @@
+version: '3.7'
+services:
+  migration:
+    build:
+      context: .
+      dockerfile: Dockerfile.api.dev
+      network: host
+    command:
+      [
+        "./apps/api/scripts/wait-for-it.sh",
+        "localhost:3306",
+        "--",
+        "npm",
+        "run",
+        "migrate:api"
+      ]
+    links:
+      - mysql
+    depends_on:
+      - mysql
+    environment:
+      - SQL_HOST=mysql
+      - SQL_USER=test
+      - SQL_PASSWORD=password
+      - SQL_DATABASE=test
+    restart: on-failure:10
+    volumes:
+       - ./:/app
+       - /app/node_modules
+       - /app/apps/api/node_modules
+  mysql:
+    image: mysql:9.3.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=password123
+      - MYSQL_PASSWORD=password
+      - MYSQL_USER=test
+      - MYSQL_DATABASE=test
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - test:/var/lib/mysql
+
+volumes:
+  test:
+  
