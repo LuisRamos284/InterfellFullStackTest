@@ -45,6 +45,7 @@ export const ConfirmPurchase: React.FC<{
               Price: $
               {new Intl.NumberFormat("de-DE", {
                 style: "currency",
+                currency: "USD",
               }).format(selectedProduct.price)}
             </p>
           </div>
@@ -69,9 +70,9 @@ export const ConfirmPurchase: React.FC<{
               </button>
               <button
                 type="submit"
-                disabled={token.length !== 6}
+                disabled={token?.length !== 6}
                 className={`px-4 py-2 rounded-md transition-colors ${
-                  token.length === 6
+                  token?.length === 6
                     ? "bg-blue-600 text-white hover:bg-blue-700"
                     : "bg-blue-300 text-white cursor-not-allowed"
                 }`}

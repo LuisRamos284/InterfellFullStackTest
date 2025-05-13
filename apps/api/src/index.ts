@@ -1,12 +1,20 @@
 import express, { Request, Response } from "express";
 import "dotenv/config";
 import routes from "./routes";
-
+import cors from "cors";
 import instance from "./config/getSequelizeInstance";
 
 const app = express();
+app.disable("x-powered-by");
+
+const corsOptions = {
+  origin: "*",
+  maxAge: 86400,
+};
 
 const PORT = process.env.PORT;
+
+app.use(cors(corsOptions));
 
 app
   .listen(PORT, () => {

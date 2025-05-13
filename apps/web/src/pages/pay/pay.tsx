@@ -1,31 +1,15 @@
-import type React from "react";
+import React from "react";
 
 import { useState } from "react";
 import { Container } from "../../components/container";
 import { PayPayload } from "../../validations/pay";
 import { ConfirmPurchase } from "./confirmPurchase";
 import { ProductAttributes } from "commons";
-
-const products: ProductAttributes[] = [
-  {
-    id: "1",
-    name: "Premium Headphones",
-    price: 129.99,
-    createdAt: "test",
-    updatedAt: "test",
-    deletedAt: "test",
-  },
-  {
-    id: "2",
-    name: "Smart Watch",
-    price: 199.99,
-    createdAt: "test",
-    updatedAt: "test",
-    deletedAt: "test",
-  },
-];
+import { useGetProducts } from "../../hooks/useGetProducts";
 
 export default function Pay() {
+  const { products } = useGetProducts();
+
   const [selectedProduct, setSelectedProduct] =
     useState<ProductAttributes | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
