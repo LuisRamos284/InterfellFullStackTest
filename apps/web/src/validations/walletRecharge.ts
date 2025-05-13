@@ -1,0 +1,15 @@
+import * as yup from "yup";
+import { ObjectSchema } from "yup";
+
+export type WalletRechargePayload = {
+  rechargeAmount: number;
+  phoneNumber: string;
+  document: string;
+};
+
+export const WalletRechargeSchema: ObjectSchema<WalletRechargePayload> =
+  yup.object({
+    rechargeAmount: yup.number().required(),
+    phoneNumber: yup.string().required(),
+    document: yup.string().required(),
+  });
