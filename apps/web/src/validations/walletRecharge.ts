@@ -3,13 +3,13 @@ import { ObjectSchema } from "yup";
 
 export type WalletRechargePayload = {
   rechargeAmount: number;
-  phoneNumber: string;
+  phone: string;
   document: string;
 };
 
 export const WalletRechargeSchema: ObjectSchema<WalletRechargePayload> =
   yup.object({
     rechargeAmount: yup.number().required(),
-    phoneNumber: yup.string().required(),
+    phone: yup.string().required(),
     document: yup.string().required(),
   });

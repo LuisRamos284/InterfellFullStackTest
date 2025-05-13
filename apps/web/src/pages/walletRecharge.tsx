@@ -9,6 +9,8 @@ import {
 import { Input } from "../components/input";
 import { Container } from "../components/container";
 import { FormButtons } from "../components/formButtons";
+import { makeApiMutation } from "../hooks/useApi";
+import { BaseRoute, RouteMethod } from "commons";
 
 export default function WalletRecharge() {
   const {
@@ -26,7 +28,12 @@ export default function WalletRecharge() {
     reset();
   };
 
-  const onSubmit = (payload: WalletRechargePayload): void => {
+  const onSubmit = async (payload: WalletRechargePayload): Promise<void> => {
+    await makeApiMutation({
+      path: `${BaseRoute.WALLET}/recharge`,
+      method: RouteMethod.PATCH,
+      body: payload,
+    });
     console.log(payload);
   };
 
@@ -48,7 +55,7 @@ export default function WalletRecharge() {
 
         <Input
           register={register}
-          controlId="phoneNumber"
+          controlId="phone"
           label="Phone Number"
           placeholder="+58123456"
           type="tel"

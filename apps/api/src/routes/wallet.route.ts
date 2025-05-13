@@ -6,7 +6,7 @@ import {
 
 const router = express.Router();
 
-router.route("/recharge").post(rechargeWallet);
+router.route("/recharge").patch(rechargeWallet);
 router.route("/client").get(getClientWallet);
 
 export = router;

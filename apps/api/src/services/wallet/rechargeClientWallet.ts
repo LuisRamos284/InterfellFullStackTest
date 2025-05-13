@@ -5,13 +5,13 @@ import { createWalletEventInDb } from "../../models/WalletEvent/dbMethods/create
 import { WalletEventType } from "commons";
 
 export const rechargeClientWallet = async (
-  params: { rechargeAmount: number; phone: string; clientDocument: string },
+  params: { rechargeAmount: number; phone: string; document: string },
   transaction: Transaction
 ) => {
-  const { phone, clientDocument, rechargeAmount } = params;
+  const { phone, document, rechargeAmount } = params;
 
   const client = await getClientByPhoneAndDocumentFromDb(
-    { phone, document: clientDocument },
+    { phone, document },
     transaction
   );
 
