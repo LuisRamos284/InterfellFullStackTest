@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import {
@@ -9,6 +9,8 @@ import { Input } from "../../components/input";
 import { Balance } from "./balance";
 import { Container } from "../../components/container";
 import { FormButtons } from "../../components/formButtons";
+import { BaseRoute, WalletWithEventsResponse } from "commons";
+import { makeApiGetRequest } from "../../hooks/useApi";
 
 export default function CheckBalance() {
   const {
@@ -22,12 +24,26 @@ export default function CheckBalance() {
     mode: "onChange",
   });
 
+  const [wallet, setWallet] = useState<WalletWithEventsResponse | null>(null);
+
   const handleClear = () => {
     reset();
   };
 
-  const onSubmit = (payload: CheckBalancePayload): void => {
-    console.log(payload);
+  const onSubmit = async (payload: CheckBalancePayload): Promise<void> => {
+    const { response, error } =
+      await makeApiGetRequest<WalletWithEventsResponse>({
+        path: `${BaseRoute.WALLET}/client`,
+        query: payload,
+      });
+
+    //TODO HANDLE ERROR
+    if (error) {
+      setWallet(null);
+      console.log(error);
+    }
+
+    setWallet(response);
   };
 
   return (
@@ -58,7 +74,7 @@ export default function CheckBalance() {
         <FormButtons handleClear={handleClear} />
       </form>
 
-      <Balance />
+      <Balance wallet={wallet} />
     </Container>
   );
 }

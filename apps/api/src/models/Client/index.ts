@@ -14,7 +14,7 @@ const ClientCreator = (sequelize: Sequelize): ClientModel => {
       },
       document: {
         unique: true,
-        type: INTEGER,
+        type: STRING,
         allowNull: false,
       },
       firstName: {

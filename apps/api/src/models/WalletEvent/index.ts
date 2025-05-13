@@ -1,4 +1,4 @@
-import { CHAR, DATE, ENUM, INTEGER, NOW, Sequelize, UUIDV4 } from "sequelize";
+import { BIGINT, CHAR, DATE, ENUM, NOW, Sequelize, UUIDV4 } from "sequelize";
 import { WalletEventInstance, WalletEventModel } from "./types";
 import { WalletEventType } from "commons";
 
@@ -27,7 +27,7 @@ const WalletEventCreator = (sequelize: Sequelize): WalletEventModel => {
       },
       transactionAmount: {
         allowNull: false,
-        type: INTEGER,
+        type: BIGINT,
         defaultValue: 0,
       },
       createdAt: {

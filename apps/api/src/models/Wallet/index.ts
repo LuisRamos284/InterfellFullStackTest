@@ -1,4 +1,4 @@
-import { CHAR, DATE, INTEGER, NOW, Sequelize, UUIDV4 } from "sequelize";
+import { BIGINT, CHAR, DATE, NOW, Sequelize, UUIDV4 } from "sequelize";
 import { WalletInstance, WalletModel } from "./types";
 
 const WalletCreator = (sequelize: Sequelize): WalletModel => {
@@ -23,7 +23,7 @@ const WalletCreator = (sequelize: Sequelize): WalletModel => {
       },
       balance: {
         allowNull: false,
-        type: INTEGER,
+        type: BIGINT,
         defaultValue: 0,
       },
       createdAt: {

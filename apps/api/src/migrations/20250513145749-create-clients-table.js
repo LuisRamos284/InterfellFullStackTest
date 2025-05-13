@@ -16,7 +16,7 @@ module.exports = {
           },
           document: {
             unique: true,
-            type: Sequelize.INTEGER,
+            type: Sequelize.STRING,
             allowNull: false,
           },
           firstName: {

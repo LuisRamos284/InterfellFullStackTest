@@ -81,7 +81,7 @@ export default function ClientRegister() {
           controlId="document"
           label="Document"
           placeholder="123234"
-          type="number"
+          type="text"
           errors={errors}
         />
 

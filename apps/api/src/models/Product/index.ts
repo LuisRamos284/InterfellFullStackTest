@@ -1,4 +1,4 @@
-import { CHAR, DATE, INTEGER, NOW, STRING, Sequelize, UUIDV4 } from "sequelize";
+import { BIGINT, CHAR, DATE, NOW, STRING, Sequelize, UUIDV4 } from "sequelize";
 import { ProductInstance, ProductModel } from "./types";
 
 const ProductCreator = (sequelize: Sequelize): ProductModel => {
@@ -17,7 +17,7 @@ const ProductCreator = (sequelize: Sequelize): ProductModel => {
         allowNull: false,
       },
       price: {
-        type: INTEGER,
+        type: BIGINT,
         allowNull: false,
         defaultValue: 0,
       },

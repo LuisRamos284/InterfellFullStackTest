@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { buildErrorMsg } from "../utils/methods";
 import { getTransaction } from "../config/getSequelizeInstance";
 import { rechargeClientWallet } from "../services/wallet/rechargeClientWallet";
+import { getWalletByDocument } from "../services/wallet/getWalletByClientId";
 
 export const rechargeWallet = async (
   req: Request,
@@ -29,9 +30,15 @@ export const getClientWallet = async (
 ): Promise<void> => {
   const transaction = await getTransaction();
   try {
-    const walletData = req.body;
+    const { phone, document } = req.query;
 
-    const response = await rechargeClientWallet(walletData, transaction);
+    const response = await getWalletByDocument(
+      {
+        phone: String(phone),
+        document: String(document),
+      },
+      transaction
+    );
 
     await transaction.commit();
     res.json(response);

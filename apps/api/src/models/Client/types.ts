@@ -3,7 +3,7 @@ import { WalletInstance } from "../Wallet/types";
 import { WalletEventInstance } from "../WalletEvent/types";
 
 export interface ClientCreationParams {
-  document: number;
+  document: string;
   firstName: string;
   lastName: string;
   phone: string;
@@ -12,7 +12,7 @@ export interface ClientCreationParams {
 
 export type ClientAttributes = {
   id: string;
-  document: number;
+  document: string;
   firstName: string;
   lastName: string;
   phone: string;

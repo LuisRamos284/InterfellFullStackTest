@@ -2,7 +2,7 @@ import { WalletWithEventsResponse } from "./wallet";
 
 export type ClientAttributes = {
   id: string;
-  document: number;
+  document: string;
   firstName: string;
   lastName: string;
   phone: string;

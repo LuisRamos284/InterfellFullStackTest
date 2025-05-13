@@ -27,7 +27,7 @@ module.exports = {
           },
           balance: {
             allowNull: false,
-            type: Sequelize.INTEGER,
+            type: Sequelize.BIGINT,
             defaultValue: 0,
           },
           createdAt: {
@@ -73,7 +73,7 @@ module.exports = {
           },
           transactionAmount: {
             allowNull: false,
-            type: Sequelize.INTEGER,
+            type: Sequelize.BIGINT,
             defaultValue: 0,
           },
           createdAt: {
