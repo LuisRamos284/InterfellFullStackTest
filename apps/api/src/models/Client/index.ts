@@ -21,6 +21,7 @@ const ClientCreator = (sequelize: Sequelize): ClientModel => {
         defaultValue: literal("(uuid())"),
       },
       document: {
+        unique: true,
         type: INTEGER,
         allowNull: false,
       },
@@ -33,10 +34,12 @@ const ClientCreator = (sequelize: Sequelize): ClientModel => {
         allowNull: false,
       },
       phone: {
+        unique: true,
         type: STRING,
         allowNull: false,
       },
       email: {
+        unique: true,
         type: STRING,
         allowNull: false,
       },

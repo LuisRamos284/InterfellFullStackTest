@@ -1,4 +1,6 @@
-import { Model, ModelStatic } from 'sequelize';
+import { Model, ModelStatic } from "sequelize";
+import { WalletInstance } from "../Wallet/types";
+import { WalletEventInstance } from "../WalletEvent/types";
 
 export interface ClientCreationParams {
   document: number;
@@ -25,3 +27,10 @@ export interface ClientInstance
     ClientAttributes {}
 
 export type ClientModel = ModelStatic<ClientInstance>;
+
+export type GetClientFromDb = ClientInstance & {
+  // client should always have a wallet
+  wallet: WalletInstance & {
+    events: WalletEventInstance[];
+  };
+};

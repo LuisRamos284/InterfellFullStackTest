@@ -12,27 +12,30 @@ module.exports = {
             primaryKey: true,
             type: Sequelize.CHAR(36),
             unique: true,
-            defaultValue: Sequelize.literal('(uuid())')
+            defaultValue: Sequelize.literal("(uuid())"),
           },
           document: {
+            unique: true,
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: false,
           },
           firstName: {
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: false,
           },
           lastName: {
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: false,
           },
           phone: {
+            unique: true,
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: false,
           },
           email: {
+            unique: true,
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: false,
           },
           createdAt: {
             allowNull: false,
@@ -59,7 +62,6 @@ module.exports = {
       throw error;
     }
   },
-
   async down(queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
