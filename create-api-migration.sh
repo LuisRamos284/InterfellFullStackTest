@@ -37,6 +37,6 @@ cd ../../../../../
 # if you have vscode, opening the file with it.
 if command -v code &> /dev/null
 then 
-    code "apps/agile-velocity-api/src/migrations/$filename"
+    code "apps/api/src/migrations/$filename"
 fi
 
