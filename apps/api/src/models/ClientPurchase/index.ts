@@ -1,4 +1,4 @@
-import { CHAR, DATE, ENUM, NOW, Sequelize, literal } from "sequelize";
+import { CHAR, DATE, ENUM, NOW, Sequelize, UUIDV4 } from "sequelize";
 import { ClientPurchaseInstance, ClientPurchaseModel } from "./types";
 import { PurchaseStatus } from "commons";
 
@@ -11,7 +11,7 @@ const ClientPurchaseCreator = (sequelize: Sequelize): ClientPurchaseModel => {
         primaryKey: true,
         type: CHAR(36),
         unique: true,
-        defaultValue: literal("(uuid())"),
+        defaultValue: UUIDV4,
       },
       clientId: {
         allowNull: false,

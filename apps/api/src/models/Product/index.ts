@@ -1,12 +1,4 @@
-import {
-  CHAR,
-  DATE,
-  INTEGER,
-  NOW,
-  STRING,
-  Sequelize,
-  literal,
-} from "sequelize";
+import { CHAR, DATE, INTEGER, NOW, STRING, Sequelize, UUIDV4 } from "sequelize";
 import { ProductInstance, ProductModel } from "./types";
 
 const ProductCreator = (sequelize: Sequelize): ProductModel => {
@@ -18,7 +10,7 @@ const ProductCreator = (sequelize: Sequelize): ProductModel => {
         primaryKey: true,
         type: CHAR(36),
         unique: true,
-        defaultValue: literal("(uuid())"),
+        defaultValue: UUIDV4,
       },
       name: {
         type: STRING,

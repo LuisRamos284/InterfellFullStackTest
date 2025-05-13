@@ -1,4 +1,4 @@
-import { CHAR, DATE, INTEGER, NOW, Sequelize, literal } from "sequelize";
+import { CHAR, DATE, INTEGER, NOW, Sequelize, UUIDV4 } from "sequelize";
 import { WalletInstance, WalletModel } from "./types";
 
 const WalletCreator = (sequelize: Sequelize): WalletModel => {
@@ -10,7 +10,7 @@ const WalletCreator = (sequelize: Sequelize): WalletModel => {
         primaryKey: true,
         type: CHAR(36),
         unique: true,
-        defaultValue: literal("(uuid())"),
+        defaultValue: UUIDV4,
       },
       clientId: {
         allowNull: false,

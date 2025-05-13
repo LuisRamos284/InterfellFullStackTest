@@ -1,12 +1,4 @@
-import {
-  CHAR,
-  DATE,
-  INTEGER,
-  NOW,
-  STRING,
-  Sequelize,
-  literal,
-} from "sequelize";
+import { CHAR, DATE, INTEGER, NOW, STRING, Sequelize, UUIDV4 } from "sequelize";
 import { ClientInstance, ClientModel } from "./types";
 
 const ClientCreator = (sequelize: Sequelize): ClientModel => {
@@ -18,7 +10,7 @@ const ClientCreator = (sequelize: Sequelize): ClientModel => {
         primaryKey: true,
         type: CHAR(36),
         unique: true,
-        defaultValue: literal("(uuid())"),
+        defaultValue: UUIDV4,
       },
       document: {
         unique: true,

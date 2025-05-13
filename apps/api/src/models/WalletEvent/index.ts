@@ -1,4 +1,4 @@
-import { CHAR, DATE, ENUM, INTEGER, NOW, Sequelize, literal } from "sequelize";
+import { CHAR, DATE, ENUM, INTEGER, NOW, Sequelize, UUIDV4 } from "sequelize";
 import { WalletEventInstance, WalletEventModel } from "./types";
 import { WalletEventType } from "commons";
 
@@ -11,7 +11,7 @@ const WalletEventCreator = (sequelize: Sequelize): WalletEventModel => {
         primaryKey: true,
         type: CHAR(36),
         unique: true,
-        defaultValue: literal("(uuid())"),
+        defaultValue: UUIDV4,
       },
       walletId: {
         allowNull: false,
