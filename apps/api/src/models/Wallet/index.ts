@@ -1,17 +1,9 @@
-import {
-  CHAR,
-  DATE,
-  INTEGER,
-  NOW,
-  STRING,
-  Sequelize,
-  literal,
-} from "sequelize";
-import { ClientInstance, ClientModel } from "./types";
+import { CHAR, DATE, INTEGER, NOW, Sequelize, literal } from "sequelize";
+import { WalletInstance, WalletModel } from "./types";
 
-const ClientCreator = (sequelize: Sequelize): ClientModel => {
-  const Client = sequelize.define<ClientInstance>(
-    "Client",
+const WalletCreator = (sequelize: Sequelize): WalletModel => {
+  const Wallet = sequelize.define<WalletInstance>(
+    "Wallet",
     {
       id: {
         allowNull: false,
@@ -20,25 +12,19 @@ const ClientCreator = (sequelize: Sequelize): ClientModel => {
         unique: true,
         defaultValue: literal("(uuid())"),
       },
-      document: {
+      clientId: {
+        allowNull: false,
+        unique: true,
+        type: CHAR(36),
+        references: {
+          model: "Client",
+          key: "id",
+        },
+      },
+      balance: {
+        allowNull: false,
         type: INTEGER,
-        allowNull: false,
-      },
-      firstName: {
-        type: STRING,
-        allowNull: false,
-      },
-      lastName: {
-        type: STRING,
-        allowNull: false,
-      },
-      phone: {
-        type: STRING,
-        allowNull: false,
-      },
-      email: {
-        type: STRING,
-        allowNull: false,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
@@ -58,21 +44,25 @@ const ClientCreator = (sequelize: Sequelize): ClientModel => {
     },
     {
       freezeTableName: true,
-      tableName: "Client",
+      tableName: "Wallet",
       paranoid: true,
     }
   );
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  Client.associate = (models) => {
-    Client.hasOne(models.Wallet, {
+  Wallet.associate = (models) => {
+    Wallet.belongsTo(models.Client, {
       foreignKey: "clientId",
-      as: "wallet",
+      as: "client",
+    });
+    Wallet.hasMany(models.WalletEvent, {
+      foreignKey: "walletId",
+      as: "events",
     });
   };
 
-  return Client;
+  return Wallet;
 };
 
-export = ClientCreator;
+export = WalletCreator;
