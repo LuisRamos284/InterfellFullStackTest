@@ -11,6 +11,8 @@ import { useForm } from "react-hook-form";
 import { Container } from "../components/container";
 import { Input } from "../components/input";
 import { FormButtons } from "../components/formButtons";
+import { makeApiMutation } from "../hooks/useApi";
+import { BaseRoute, RouteMethod } from "commons";
 
 export default function ClientRegister() {
   const {
@@ -28,7 +30,13 @@ export default function ClientRegister() {
     reset();
   };
 
-  const onSubmit = (payload: ClientRegisterPayload): void => {
+  const onSubmit = async (payload: ClientRegisterPayload): Promise<void> => {
+    await makeApiMutation({
+      path: `${BaseRoute.CLIENT}`,
+      method: RouteMethod.POST,
+      body: payload,
+    });
+
     console.log(payload);
   };
 
@@ -72,8 +80,8 @@ export default function ClientRegister() {
           register={register}
           controlId="document"
           label="Document"
-          placeholder="V123234"
-          type="text"
+          placeholder="123234"
+          type="number"
           errors={errors}
         />
 

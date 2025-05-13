@@ -31,6 +31,7 @@ export const registerClient = async (
     await transaction.commit();
     res.json(response);
   } catch (error) {
+    console.log(error);
     await transaction.rollback();
     res.status(500).send({
       message: buildErrorMsg("retrieving the clients"),

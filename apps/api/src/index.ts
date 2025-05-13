@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import "dotenv/config";
 import routes from "./routes";
 import cors from "cors";
+import bodyParser from "body-parser";
 import instance from "./config/getSequelizeInstance";
 
 const app = express();
@@ -13,8 +14,13 @@ const corsOptions = {
 };
 
 const PORT = process.env.PORT;
+app.use((req, res, next) => {
+  express.json()(req, res, next);
+});
 
 app.use(cors(corsOptions));
+// parse body params and attache them to req.body
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app
   .listen(PORT, () => {

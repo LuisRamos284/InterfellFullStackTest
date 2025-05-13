@@ -43,7 +43,7 @@ export function Input<T extends FieldValues>({
         {...register(controlId)}
       />
       {errors?.[controlId]?.message && (
-        <p className="text-error text-xs my-2 ml-3">
+        <p className="text-red-500 text-xs my-2 ml-3">
           {String(errors[controlId]?.message)}
         </p>
       )}
