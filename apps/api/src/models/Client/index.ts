@@ -70,6 +70,10 @@ const ClientCreator = (sequelize: Sequelize): ClientModel => {
       foreignKey: "clientId",
       as: "wallet",
     });
+    Client.hasMany(models.ClientPurchase, {
+      foreignKey: "clientId",
+      as: "purchases",
+    });
   };
 
   return Client;
