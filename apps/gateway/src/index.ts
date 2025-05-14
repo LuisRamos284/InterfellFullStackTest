@@ -1,18 +1,33 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
-import { TEST_MESSAGE } from "commons";
+import cors from "cors";
+import bodyParser from "body-parser";
+import routes from "./routes";
 
 // configures dotenv to work in your application
 dotenv.config();
 const app = express();
 
-const PORT = process.env.PORT;
+const corsOptions = {
+  origin: process.env.APP_URL,
+  maxAge: 86400,
+};
 
-console.log(PORT);
+const PORT = process.env.PORT;
+app.use((req, res, next) => {
+  express.json()(req, res, next);
+});
+
+app.use(cors(corsOptions));
+// parse body params and attache them to req.body
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (request: Request, response: Response) => {
-  response.status(200).send(`${TEST_MESSAGE} Bridge Hello World`);
+  response.status(200).send(`Hello World`);
 });
+
+// mount api v1 routes
+app.use("/v1", routes);
 
 app
   .listen(PORT, () => {

@@ -9,7 +9,7 @@ const app = express();
 app.disable("x-powered-by");
 
 const corsOptions = {
-  origin: "*",
+  origin: process.env.GATEWAY_URL,
   maxAge: 86400,
 };
 
