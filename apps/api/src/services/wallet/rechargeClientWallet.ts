@@ -6,7 +6,7 @@ import { updateWalletBalance } from "./updateWalletBalance";
 export const rechargeClientWallet = async (
   params: { rechargeAmount: number; phone: string; document: string },
   transaction: Transaction
-) => {
+): Promise<boolean> => {
   const { phone, document, rechargeAmount } = params;
 
   const client = await getClientByPhoneAndDocumentFromDb(
@@ -14,9 +14,8 @@ export const rechargeClientWallet = async (
     transaction
   );
 
-  if (!client?.wallet) {
-    return { data: false };
-  }
+  if (!client?.wallet)
+    throw new Error("There is no user associated to that phone and document");
 
   await updateWalletBalance(
     {
@@ -29,5 +28,5 @@ export const rechargeClientWallet = async (
     transaction
   );
 
-  return { data: true };
+  return true;
 };

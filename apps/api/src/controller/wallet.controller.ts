@@ -19,7 +19,9 @@ export const rechargeWallet = async (
   } catch (error) {
     await transaction.rollback();
     res.status(500).send({
-      message: buildErrorMsg("recharging the wallet"),
+      message:
+        (error as unknown as Error)?.message ||
+        buildErrorMsg("recharging the wallet"),
     });
   }
 };

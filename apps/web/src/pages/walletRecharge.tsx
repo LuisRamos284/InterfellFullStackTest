@@ -11,8 +11,14 @@ import { Container } from "../components/container";
 import { FormButtons } from "../components/formButtons";
 import { makeApiMutation } from "../hooks/useApi";
 import { BaseRoute, RouteMethod } from "commons";
+import { useTriggerToast } from "../hooks/useTriggerToast";
+import { useState } from "react";
 
 export default function WalletRecharge() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { triggerErrorToast, triggerSuccessToast } = useTriggerToast();
+
   const {
     reset,
     register,
@@ -29,12 +35,19 @@ export default function WalletRecharge() {
   };
 
   const onSubmit = async (payload: WalletRechargePayload): Promise<void> => {
-    await makeApiMutation({
+    setIsLoading(true);
+    const { error } = await makeApiMutation({
       path: `${BaseRoute.WALLET}/recharge`,
       method: RouteMethod.PATCH,
       body: payload,
     });
-    console.log(payload);
+
+    if (error) {
+      triggerErrorToast({ message: error.message.toString() });
+    } else {
+      triggerSuccessToast({ message: "Wallet Successfully recharged" });
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -71,7 +84,7 @@ export default function WalletRecharge() {
           errors={errors}
         />
 
-        <FormButtons handleClear={handleClear} />
+        <FormButtons handleClear={handleClear} disabled={isLoading} />
       </form>
     </Container>
   );
