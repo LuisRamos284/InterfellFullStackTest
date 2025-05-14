@@ -13,19 +13,27 @@ export const updateWalletBalance = async (
   },
   transaction?: Transaction
 ): Promise<void> => {
-  const { clientId, rechargeAmount, currentBalance, walletId } = params;
-
-  await rechargeClientWalletInDb(
+  const {
     clientId,
-    currentBalance + rechargeAmount,
-    transaction
-  );
+    rechargeAmount,
+    currentBalance,
+    walletId,
+    walletEventType,
+  } = params;
+
+  const newBalance =
+    walletEventType === WalletEventType.CREDIT
+      ? currentBalance + rechargeAmount
+      : currentBalance - rechargeAmount;
+
+  await rechargeClientWalletInDb(clientId, newBalance, transaction);
 
   await createWalletEventInDb(
     {
       transactionAmount: rechargeAmount,
-      walletEventType: WalletEventType.CREDIT,
+      walletEventType,
       walletId: walletId,
+      balance: newBalance,
     },
     transaction
   );

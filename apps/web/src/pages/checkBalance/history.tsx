@@ -1,5 +1,6 @@
 import { WalletEventAttributes, WalletEventType } from "commons";
 import React from "react";
+import { formatMoney } from "../../utils/formatMoney";
 
 export const BalanceHistory: React.FC<{ events: WalletEventAttributes[] }> = ({
   events,
@@ -29,17 +30,26 @@ export const BalanceHistory: React.FC<{ events: WalletEventAttributes[] }> = ({
               <th className="py-3 px-4 text-left text-sm font-semibold text-blue-800">
                 Type
               </th>
+              <th className="py-3 px-4 text-left text-sm font-semibold text-blue-800">
+                Final balance
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-blue-100">
             {events.map(
-              ({ createdAt, transactionAmount, id, walletEventType }) => (
+              ({
+                createdAt,
+                transactionAmount,
+                id,
+                walletEventType,
+                balance,
+              }) => (
                 <tr key={id} className="hover:bg-blue-50">
                   <td className="py-3 px-4 text-sm text-gray-700">
                     {formatDate(createdAt)}
                   </td>
                   <td className="py-3 px-4 text-sm text-gray-700">
-                    ${transactionAmount.toFixed(2)}
+                    {formatMoney(transactionAmount)}
                   </td>
                   <td className="py-3 px-4">
                     <span
@@ -51,6 +61,9 @@ export const BalanceHistory: React.FC<{ events: WalletEventAttributes[] }> = ({
                     >
                       {walletEventType}
                     </span>
+                  </td>
+                  <td className="py-3 px-4 text-sm text-gray-700">
+                    {formatMoney(balance)}
                   </td>
                 </tr>
               )

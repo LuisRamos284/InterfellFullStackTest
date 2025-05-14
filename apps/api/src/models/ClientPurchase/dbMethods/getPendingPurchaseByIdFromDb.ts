@@ -21,7 +21,7 @@ export const getPendingPurchaseByIdFromDb = async (
     },
     include: [
       {
-        association: "Product",
+        association: "product",
       },
     ],
     transaction,

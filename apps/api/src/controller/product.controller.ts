@@ -4,6 +4,7 @@ import { getTransaction } from "../config/getSequelizeInstance";
 import { getAllProducts } from "../services/products/getAllProducts";
 import { createPurchaseOrder } from "../services/products/purchaseProduct";
 import { getPendingPurchasesByClientId } from "../services/products/getPendingPurchasesByClientId";
+import { confirmClientPurchase } from "../services/products/confirmPurchase";
 
 export const getProducts = async (
   req: Request,
@@ -68,16 +69,12 @@ export const confirmOrder = async (
 ): Promise<void> => {
   const transaction = await getTransaction();
   try {
-    const { clientId, token } = req.body;
-
-    const response = await getPendingPurchasesByClientId(
-      String(req.query.clientId),
-      transaction
-    );
+    const response = await confirmClientPurchase(req.body, transaction);
 
     await transaction.commit();
     res.json(response);
   } catch (error) {
+    console.log(error);
     await transaction.rollback();
     res.status(500).send({
       message: buildErrorMsg("getting products"),

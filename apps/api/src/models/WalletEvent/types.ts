@@ -5,11 +5,13 @@ export interface WalletEventCreationParams {
   walletId: string;
   walletEventType: WalletEventType;
   transactionAmount: number;
+  balance: number;
 }
 
 export type WalletEventAttributes = {
   id: string;
   walletId: string;
+  balance: number;
   walletEventType: WalletEventType;
   transactionAmount: number;
   createdAt: Date;

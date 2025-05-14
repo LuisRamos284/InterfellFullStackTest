@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { PayPayload, PaySchema } from "../../validations/pay";
 
 import { Input } from "../../components/input";
+import { formatMoney } from "../../utils/formatMoney";
 
 export const ConfirmPurchase: React.FC<{
   selectedProduct: ProductAttributes | null;
@@ -42,11 +43,7 @@ export const ConfirmPurchase: React.FC<{
           <div className="mb-4">
             <p className="text-gray-700">Product: {selectedProduct?.name}</p>
             <p className="text-gray-700">
-              Price: $
-              {new Intl.NumberFormat("de-DE", {
-                style: "currency",
-                currency: "USD",
-              }).format(selectedProduct.price)}
+              Price: {formatMoney(selectedProduct.price)}
             </p>
           </div>
           <form onSubmit={handleSubmit(handleConfirmPurchase)}>

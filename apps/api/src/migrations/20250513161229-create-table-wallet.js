@@ -76,6 +76,11 @@ module.exports = {
             type: Sequelize.BIGINT,
             defaultValue: 0,
           },
+          balance: {
+            allowNull: false,
+            type: Sequelize.BIGINT,
+            defaultValue: 0,
+          },
           createdAt: {
             allowNull: false,
             type: Sequelize.DATE,

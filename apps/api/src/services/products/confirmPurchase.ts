@@ -4,7 +4,7 @@ import { getPendingPurchaseByIdFromDb } from "../../models/ClientPurchase/dbMeth
 import { updateWalletBalance } from "../wallet/updateWalletBalance";
 import { WalletEventType } from "commons";
 
-export const confirmPurchase = async (
+export const confirmClientPurchase = async (
   params: { clientId: string; token: string },
   transaction: Transaction
 ): Promise<boolean> => {
@@ -37,7 +37,7 @@ export const confirmPurchase = async (
   await updateWalletBalance(
     {
       clientId,
-      rechargeAmount: -purchase.product.price,
+      rechargeAmount: purchase.product.price,
       currentBalance: wallet.balance,
       walletEventType: WalletEventType.DEBIT,
       walletId: wallet.id,

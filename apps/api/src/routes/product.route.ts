@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  confirmOrder,
   getPendingOrders,
   getProducts,
   purchaseProduct,
@@ -13,6 +14,6 @@ router.route("/purchase").post(purchaseProduct);
 
 router.route("/purchase/pending").get(getPendingOrders);
 
-router.route("/purchase/confirm").get(getPendingOrders);
+router.route("/purchase/confirm").put(confirmOrder);
 
 export = router;

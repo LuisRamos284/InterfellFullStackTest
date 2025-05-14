@@ -5,6 +5,7 @@ export type WalletEventAttributes = {
   walletId: string;
   walletEventType: WalletEventType;
   transactionAmount: number;
+  balance: number;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;

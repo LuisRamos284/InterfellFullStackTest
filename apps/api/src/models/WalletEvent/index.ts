@@ -30,6 +30,11 @@ const WalletEventCreator = (sequelize: Sequelize): WalletEventModel => {
         type: BIGINT,
         defaultValue: 0,
       },
+      balance: {
+        allowNull: false,
+        type: BIGINT,
+        defaultValue: 0,
+      },
       createdAt: {
         allowNull: false,
         type: DATE,
