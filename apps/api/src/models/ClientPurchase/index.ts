@@ -38,6 +38,11 @@ const ClientPurchaseCreator = (sequelize: Sequelize): ClientPurchaseModel => {
         defaultValue: PurchaseStatus.PENDING_CONFIRMATION,
         allowNull: false,
       },
+      token: {
+        type: CHAR(6),
+        allowNull: false,
+        unique: true,
+      },
       createdAt: {
         allowNull: false,
         type: DATE,

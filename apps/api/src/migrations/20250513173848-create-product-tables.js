@@ -97,6 +97,11 @@ module.exports = {
             defaultValue: PurchaseStatus.PENDING_CONFIRMATION,
             allowNull: false,
           },
+          token: {
+            type: Sequelize.CHAR(6),
+            allowNull: false,
+            unique: true,
+          },
           createdAt: {
             allowNull: false,
             type: Sequelize.DATE,
