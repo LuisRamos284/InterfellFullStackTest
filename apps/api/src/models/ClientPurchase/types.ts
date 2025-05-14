@@ -1,5 +1,6 @@
 import { PurchaseStatus } from "commons";
 import { Model, ModelStatic } from "sequelize";
+import { ProductInstance } from "../Product/types";
 
 export interface ClientPurchaseCreationParams {
   clientId: string;
@@ -23,3 +24,8 @@ export interface ClientPurchaseInstance
     ClientPurchaseAttributes {}
 
 export type ClientPurchaseModel = ModelStatic<ClientPurchaseInstance>;
+
+export type GetPendingPurchaseByIdFromDb = ClientPurchaseInstance & {
+  // client should always have a wallet
+  product: ProductInstance;
+};

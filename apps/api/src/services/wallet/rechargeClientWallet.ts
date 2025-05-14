@@ -1,8 +1,7 @@
 import { Transaction } from "sequelize";
 import { getClientByPhoneAndDocumentFromDb } from "../../models/Client/dbMethods/getClientByPhoneAndDocumentFromDb";
-import { rechargeClientWalletInDb } from "../../models/Wallet/dbMethods/rechargeClientWalletInDb";
-import { createWalletEventInDb } from "../../models/WalletEvent/dbMethods/createWalletEventInDb";
 import { WalletEventType } from "commons";
+import { updateWalletBalance } from "./updateWalletBalance";
 
 export const rechargeClientWallet = async (
   params: { rechargeAmount: number; phone: string; document: string },
@@ -19,15 +18,11 @@ export const rechargeClientWallet = async (
     return { data: false };
   }
 
-  await rechargeClientWalletInDb(
-    client.id,
-    client.wallet.balance + rechargeAmount,
-    transaction
-  );
-
-  await createWalletEventInDb(
+  await updateWalletBalance(
     {
-      transactionAmount: rechargeAmount,
+      clientId: client.id,
+      rechargeAmount,
+      currentBalance: client.wallet.balance,
       walletEventType: WalletEventType.CREDIT,
       walletId: client.wallet.id,
     },

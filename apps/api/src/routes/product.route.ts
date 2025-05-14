@@ -13,4 +13,6 @@ router.route("/purchase").post(purchaseProduct);
 
 router.route("/purchase/pending").get(getPendingOrders);
 
+router.route("/purchase/confirm").get(getPendingOrders);
+
 export = router;

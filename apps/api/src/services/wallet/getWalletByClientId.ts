@@ -12,8 +12,6 @@ export const getWalletByDocument = async (
     transaction
   );
 
-  console.log(params);
-
   if (!client) {
     return { data: false };
   }

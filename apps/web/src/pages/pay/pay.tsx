@@ -43,7 +43,7 @@ export default function Pay() {
       },
     });
 
-    // HANDLE ERROR
+    // TODO: HANDLE ERROR
     if (error) return;
 
     refreshOrders();
@@ -52,10 +52,23 @@ export default function Pay() {
     setPurchaseComplete(false);
   };
 
-  const handleConfirmPurchase = (payload: PayPayload): void => {
-    if (payload.token.length === 6) {
-      setPurchaseComplete(true);
-    }
+  const handleConfirmPurchase = async (payload: PayPayload): Promise<void> => {
+    const { token } = payload;
+
+    if (!selectedClient) return;
+
+    const { error } = await makeApiMutation({
+      method: RouteMethod.PUT,
+      path: `${BaseRoute.PRODUCTS}/purchase/confirm`,
+      body: {
+        token,
+        clientId: selectedClient.id,
+      },
+    });
+    // TODO: HANDLE ERROR
+    if (error) return;
+
+    setShowConfirmation(false);
   };
 
   const handleCancel = () => {

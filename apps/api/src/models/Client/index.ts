@@ -1,4 +1,4 @@
-import { CHAR, DATE, INTEGER, NOW, STRING, Sequelize, UUIDV4 } from "sequelize";
+import { CHAR, DATE, NOW, STRING, Sequelize, UUIDV4 } from "sequelize";
 import { ClientInstance, ClientModel } from "./types";
 
 const ClientCreator = (sequelize: Sequelize): ClientModel => {

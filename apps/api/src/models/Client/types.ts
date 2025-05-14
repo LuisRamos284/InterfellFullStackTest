@@ -34,3 +34,8 @@ export type GetClientFromDb = ClientInstance & {
     events: WalletEventInstance[];
   };
 };
+
+export type GetClientByIdFromDb = ClientInstance & {
+  // client should always have a wallet
+  wallet: WalletInstance;
+};

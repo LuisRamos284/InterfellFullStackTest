@@ -2,7 +2,7 @@ import { WalletWithEventsResponse } from "commons";
 import { GetClientWalletFromDb } from "../../types";
 import { formatWalletEvents } from "../../../WalletEvent/dbMethods/utils/formatWalletEvent";
 
-export function formatClientWallet(
+export function formatClientWalletWithEvents(
   wallet: GetClientWalletFromDb
 ): WalletWithEventsResponse {
   const clientDataToReturn = wallet.get({ plain: true });

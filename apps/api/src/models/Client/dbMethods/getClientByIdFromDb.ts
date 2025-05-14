@@ -1,8 +1,11 @@
 import { Transaction } from "sequelize";
 import { Client } from "../..";
-import { formatClientWithWalletAndEvents } from "./util/formatClient";
+import {
+  formatClientWithWallet,
+  formatClientWithWalletAndEvents,
+} from "./util/formatClient";
 import { ClientWithWalletAndEventsResponse } from "commons";
-import { GetClientFromDb } from "../types";
+import { GetClientByIdFromDb, GetClientFromDb } from "../types";
 
 export async function getClientByPhoneAndDocumentFromDb(
   params: { phone: string; document: string },
@@ -17,15 +20,10 @@ export async function getClientByPhoneAndDocumentFromDb(
     include: [
       {
         association: "wallet",
-        include: [
-          {
-            association: "events",
-          },
-        ],
       },
     ],
     transaction,
-  })) as unknown as GetClientFromDb;
+  })) as unknown as GetClientByIdFromDb;
 
-  return client && formatClientWithWalletAndEvents(client);
+  return client && formatClientWithWallet(client);
 }

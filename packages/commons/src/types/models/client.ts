@@ -1,4 +1,4 @@
-import { WalletWithEventsResponse } from "./wallet";
+import { WalletAttributes, WalletWithEventsResponse } from "./wallet";
 
 export type ClientAttributes = {
   id: string;
@@ -12,6 +12,10 @@ export type ClientAttributes = {
   deletedAt: string | null;
 };
 
-export type ClientWithWalletResponse = ClientAttributes & {
+export type ClientWithWalletAndEventsResponse = ClientAttributes & {
   wallet: WalletWithEventsResponse;
+};
+
+export type ClientWithWalletResponse = ClientAttributes & {
+  wallet: WalletAttributes;
 };

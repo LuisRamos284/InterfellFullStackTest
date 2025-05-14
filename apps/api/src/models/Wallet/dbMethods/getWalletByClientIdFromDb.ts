@@ -2,7 +2,7 @@ import { Transaction } from "sequelize";
 import { Wallet } from "../..";
 import { WalletWithEventsResponse } from "commons";
 import { GetClientWalletFromDb } from "../types";
-import { formatClientWallet } from "./utils/formatClientWallet";
+import { formatClientWalletWithEvents } from "./utils/formatClientWallet";
 
 export async function getWalletByClientIdFromDb(
   clientId: string,
@@ -20,5 +20,5 @@ export async function getWalletByClientIdFromDb(
     transaction,
   })) as unknown as GetClientWalletFromDb | null;
 
-  return wallet && formatClientWallet(wallet);
+  return wallet && formatClientWalletWithEvents(wallet);
 }
