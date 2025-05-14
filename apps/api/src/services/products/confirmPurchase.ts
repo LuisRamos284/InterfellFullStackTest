@@ -2,7 +2,8 @@ import { Transaction } from "sequelize";
 import { getWalletByClientIdFromDb } from "../../models/Wallet/dbMethods/getWalletByClientIdFromDb";
 import { getPendingPurchaseByIdFromDb } from "../../models/ClientPurchase/dbMethods/getPendingPurchaseByIdFromDb";
 import { updateWalletBalance } from "../wallet/updateWalletBalance";
-import { WalletEventType } from "commons";
+import { PurchaseStatus, WalletEventType } from "commons";
+import { updateClientPurchaseInDb } from "../../models/ClientPurchase/dbMethods/updateClientPurchaseInDb";
 
 export const confirmClientPurchase = async (
   params: { clientId: string; token: string },
@@ -42,6 +43,11 @@ export const confirmClientPurchase = async (
       walletEventType: WalletEventType.DEBIT,
       walletId: wallet.id,
     },
+    transaction
+  );
+
+  await updateClientPurchaseInDb(
+    { id: purchase.id, status: PurchaseStatus.COMPLETED },
     transaction
   );
 
