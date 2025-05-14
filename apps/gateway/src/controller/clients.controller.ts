@@ -1,14 +1,16 @@
-import { Request, Response } from "express";
 import axios, { AxiosRequestConfig } from "axios";
-import { BaseRoute, RouteMethod } from "commons";
+import { BaseRoute } from "commons";
+import { handleError } from "../utils/http";
+import { HttpControllerRequest } from "./types";
 
-export const getClients = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const getClients = async ({
+  res,
+  defaultMessage,
+  method,
+}: HttpControllerRequest): Promise<void> => {
   try {
     const getClientsConfig = {
-      method: RouteMethod.GET,
+      method,
       url: `${process.env.API_URL}/v1${BaseRoute.CLIENT}/all`,
       headers: {
         "content-type": "application/json",
@@ -19,20 +21,23 @@ export const getClients = async (
 
     res.json(response.data);
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "test",
+    handleError({
+      defaultMessage,
+      error,
+      res,
     });
   }
 };
 
-export const registerClient = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const registerClient = async ({
+  res,
+  req,
+  defaultMessage,
+  method,
+}: HttpControllerRequest): Promise<void> => {
   try {
     const createClientConfig = {
-      method: RouteMethod.POST,
+      method,
       url: `${process.env.API_URL}/v1${BaseRoute.CLIENT}`,
       headers: {
         "content-type": "application/json",
@@ -44,9 +49,10 @@ export const registerClient = async (
 
     res.json(response.data);
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "test",
+    handleError({
+      defaultMessage,
+      error,
+      res,
     });
   }
 };

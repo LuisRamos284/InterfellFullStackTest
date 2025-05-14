@@ -1,15 +1,18 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { RouteMethod, BaseRoute } from "commons";
-import { Request, Response } from "express";
-import { buildQueryParamsFromRequest } from "../utils/query";
+import { BaseRoute } from "commons";
 
-export const getProducts = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+import { buildQueryParamsFromRequest } from "../utils/query";
+import { handleError } from "../utils/http";
+import { HttpControllerRequest } from "./types";
+
+export const getProducts = async ({
+  res,
+  defaultMessage,
+  method,
+}: HttpControllerRequest): Promise<void> => {
   try {
     const getProductsConfig = {
-      method: RouteMethod.GET,
+      method,
       url: `${process.env.API_URL}/v1${BaseRoute.PRODUCTS}/all`,
       headers: {
         "content-type": "application/json",
@@ -20,20 +23,23 @@ export const getProducts = async (
 
     res.json(response.data);
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "test",
+    handleError({
+      defaultMessage,
+      error,
+      res,
     });
   }
 };
 
-export const purchaseProduct = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const purchaseProduct = async ({
+  res,
+  req,
+  defaultMessage,
+  method,
+}: HttpControllerRequest): Promise<void> => {
   try {
     const getProductsConfig = {
-      method: RouteMethod.POST,
+      method,
       url: `${process.env.API_URL}/v1${BaseRoute.PRODUCTS}/purchase`,
       headers: {
         "content-type": "application/json",
@@ -45,20 +51,23 @@ export const purchaseProduct = async (
 
     res.json(response.data);
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "test",
+    handleError({
+      defaultMessage,
+      error,
+      res,
     });
   }
 };
 
-export const getPendingOrders = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const getPendingOrders = async ({
+  res,
+  req,
+  defaultMessage,
+  method,
+}: HttpControllerRequest): Promise<void> => {
   try {
     const getProductsConfig = {
-      method: RouteMethod.GET,
+      method,
       url: `${process.env.API_URL}/v1${BaseRoute.PRODUCTS}/purchase/pending?${buildQueryParamsFromRequest(req)}`,
       headers: {
         "content-type": "application/json",
@@ -69,20 +78,23 @@ export const getPendingOrders = async (
 
     res.json(response.data);
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "test",
+    handleError({
+      defaultMessage,
+      error,
+      res,
     });
   }
 };
 
-export const confirmOrder = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const confirmOrder = async ({
+  res,
+  req,
+  defaultMessage,
+  method,
+}: HttpControllerRequest): Promise<void> => {
   try {
     const getProductsConfig = {
-      method: RouteMethod.PUT,
+      method,
       url: `${process.env.API_URL}/v1${BaseRoute.PRODUCTS}/purchase/confirm`,
       headers: {
         "content-type": "application/json",
@@ -94,9 +106,10 @@ export const confirmOrder = async (
 
     res.json(response.data);
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "test",
+    handleError({
+      defaultMessage,
+      error,
+      res,
     });
   }
 };

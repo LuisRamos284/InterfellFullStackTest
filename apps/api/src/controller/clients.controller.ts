@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { getAllClients } from "../services/clients/getAllClients";
-import { buildErrorMsg } from "../utils/methods";
+import { buildErrorMsg } from "commons";
 import { getTransaction } from "../config/getSequelizeInstance";
 import { registerNewClient } from "../services/clients/registerNewClient";
 

@@ -12,9 +12,7 @@ export const getWalletByDocument = async (
     transaction
   );
 
-  if (!client) {
-    return { data: false };
-  }
+  if (!client) throw Error("No User found.");
 
   return client.wallet;
 };

@@ -1,6 +1,7 @@
 import { WalletWithEventsResponse } from "commons";
 import React from "react";
 import { BalanceHistory } from "./history";
+import { formatMoney } from "../../utils/formatMoney";
 
 export const Balance: React.FC<{ wallet: WalletWithEventsResponse | null }> = ({
   wallet,
@@ -14,7 +15,7 @@ export const Balance: React.FC<{ wallet: WalletWithEventsResponse | null }> = ({
           Current Balance
         </h3>
         <p className="text-3xl font-bold text-blue-700">
-          ${wallet.balance.toFixed(2)}
+          {formatMoney(wallet.balance)}
         </p>
       </div>
 

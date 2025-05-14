@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { buildErrorMsg } from "../utils/methods";
+import { buildErrorMsg } from "commons";
 import { getTransaction } from "../config/getSequelizeInstance";
 import { getAllProducts } from "../services/products/getAllProducts";
 import { createPurchaseOrder } from "../services/products/purchaseProduct";

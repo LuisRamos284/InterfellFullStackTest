@@ -37,10 +37,12 @@ export default function CheckBalance() {
         query: payload,
       });
 
+    console.log(error);
     //TODO HANDLE ERROR
     if (error) {
       setWallet(null);
       console.log(error);
+      return;
     }
 
     setWallet(response);

@@ -1,15 +1,18 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { RouteMethod, BaseRoute } from "commons";
-import { Request, Response } from "express";
+import { BaseRoute } from "commons";
 import { buildQueryParamsFromRequest } from "../utils/query";
+import { handleError } from "../utils/http";
+import { HttpControllerRequest } from "./types";
 
-export const rechargeWallet = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const rechargeWallet = async ({
+  res,
+  req,
+  defaultMessage,
+  method,
+}: HttpControllerRequest): Promise<void> => {
   try {
     const rechargeWalletConfig = {
-      method: RouteMethod.PATCH,
+      method,
       url: `${process.env.API_URL}/v1${BaseRoute.WALLET}/recharge`,
       headers: {
         "content-type": "application/json",
@@ -21,20 +24,23 @@ export const rechargeWallet = async (
 
     res.json(response.data);
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "test",
+    handleError({
+      defaultMessage,
+      error,
+      res,
     });
   }
 };
 
-export const getClientWallet = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const getClientWallet = async ({
+  res,
+  req,
+  defaultMessage,
+  method,
+}: HttpControllerRequest): Promise<void> => {
   try {
     const getClientWalletConfig = {
-      method: RouteMethod.GET,
+      method,
       url: `${process.env.API_URL}/v1${BaseRoute.WALLET}/client?${buildQueryParamsFromRequest(req)}`,
       headers: {
         "content-type": "application/json",
@@ -45,9 +51,10 @@ export const getClientWallet = async (
 
     res.json(response.data);
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "test",
+    handleError({
+      defaultMessage,
+      error,
+      res,
     });
   }
 };
