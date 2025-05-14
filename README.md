@@ -1,32 +1,71 @@
-# `Turborepo` Vite starter
+# ePayco/Interfell Full Stack Developer Test
 
-This is a community-maintained example. If you experience a problem, please submit a pull request with a fix. GitHub Issues will be closed.
+## Variables de entorno
 
-## Using this example
+La prueba consiste en 3 apps, Api, Gateway y Web, por lo que existen 3 archivos .env los cuales deben estar en sus respectivas carpetas de la siguiente manera
 
-Run the following command:
-
-```sh
-npx create-turbo@latest -e with-vite-react
+```bash
+apps/
+  api/
+    .env
+  gateway/
+    .env
+  web/
+    .env
+packages/
+  */ # Shared package/logic
+README.md # This file!
 ```
 
-## What's inside?
+## Setup
 
-This Turborepo includes the following packages and apps:
+Una vez que los .env esten bien configurados, para ejecutar el proyecto localmente lo primero que se tiene que ejecutar es:
 
-### Apps and Packages
+```bash
+$ npm i
+$ npm run build:commons
+```
 
-- `web`: react [vite](https://vitejs.dev) ts app
-- `@repo/ui`: a stub component library shared by `web` application
-- `@repo/eslint-config`: shared `eslint` configurations
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+Luego para inicializar la base datos:
 
-Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
+```bash
+$ docker compose up
+```
 
-### Utilities
+Este mando hara el setup de los containers para la BD y a su vez habra otro container que correra las migraciones.
 
-This Turborepo has some additional tools already setup for you:
+Si todo va bien deberias ver algo en la terminal como:
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+```bash
+migration-1  | == 20250513145749-create-clients-table: migrating =======
+migration-1  | == 20250513145749-create-clients-table: migrated (0.058s)
+migration-1  |
+migration-1  | == 20250513161229-create-table-wallet: migrating =======
+migration-1  | == 20250513161229-create-table-wallet: migrated (0.083s)
+migration-1  |
+migration-1  | == 20250513173848-create-product-tables: migrating =======
+migration-1  | == 20250513173848-create-product-tables: migrated (0.092s)
+```
+
+Llegados a este punto solo falta levantar las apps ejecutando:
+
+```bash
+$ turbo run dev
+```
+
+Si todo esta bien deberias ver un output parecido a:
+
+```bash
+web:dev:
+web:dev:   VITE v5.4.19  ready in 751 ms
+web:dev:
+web:dev:   ➜  Local:   http://localhost:5173/
+web:dev:   ➜  Network: use --host to expose
+web:dev:   ➜  press h + enter to show help
+commons:dev: [5:19:54 p. m.] Found 0 errors. Watching for file changes.
+commons:dev:
+gateway:dev: Server running at PORT:  3000
+api:dev: Server running at PORT:  3001
+api:dev: Executing (default): SELECT 1+1 AS result
+api:dev: Connection has been established successfully.
+```
