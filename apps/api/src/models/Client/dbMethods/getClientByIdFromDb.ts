@@ -1,29 +1,19 @@
 import { Transaction } from "sequelize";
 import { Client } from "../..";
-import {
-  formatClientWithWallet,
-  formatClientWithWalletAndEvents,
-} from "./util/formatClient";
-import { ClientWithWalletAndEventsResponse } from "commons";
-import { GetClientByIdFromDb, GetClientFromDb } from "../types";
+import { formatClient } from "./util/formatClient";
+import { ClientAttributes } from "commons";
 
-export async function getClientByPhoneAndDocumentFromDb(
-  params: { phone: string; document: string },
+export async function getClientByIdFromDb(
+  id: string,
   transaction?: Transaction
-): Promise<ClientWithWalletAndEventsResponse | null> {
-  const { phone, document } = params;
-  const client = (await Client.findOne({
+): Promise<ClientAttributes | null> {
+  const client = await Client.findOne({
     where: {
-      phone,
-      document,
+      id,
     },
-    include: [
-      {
-        association: "wallet",
-      },
-    ],
-    transaction,
-  })) as unknown as GetClientByIdFromDb;
 
-  return client && formatClientWithWallet(client);
+    transaction,
+  });
+
+  return client && formatClient(client);
 }
