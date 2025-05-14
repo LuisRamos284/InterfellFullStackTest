@@ -27,7 +27,7 @@ export const Products: React.FC<{
             <button
               disabled={disabled}
               onClick={() => handleProductSelect(product)}
-              className="mt-4 w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+              className="mt-4 w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-300 disabled:text-white disabled:cursor-not-allowed"
             >
               Purchase
             </button>

@@ -71,11 +71,7 @@ export const ConfirmPurchase: React.FC<{
               <button
                 type="submit"
                 disabled={token?.length !== 6 || disabled}
-                className={`px-4 py-2 rounded-md transition-colors ${
-                  token?.length === 6
-                    ? "bg-blue-600 text-white hover:bg-blue-700"
-                    : "bg-blue-300 text-white cursor-not-allowed"
-                }`}
+                className={`px-4 py-2 rounded-md transition-colors bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-300 disabled:text-white disabled:cursor-not-allowed`}
               >
                 Confirm
               </button>
