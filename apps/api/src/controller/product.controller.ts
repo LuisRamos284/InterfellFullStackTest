@@ -74,10 +74,11 @@ export const confirmOrder = async (
     await transaction.commit();
     res.json(response);
   } catch (error) {
-    console.log(error);
     await transaction.rollback();
     res.status(500).send({
-      message: buildErrorMsg("getting products"),
+      message:
+        (error as unknown as Error)?.message ||
+        buildErrorMsg("registering client"),
     });
   }
 };

@@ -9,8 +9,6 @@ export const registerNewClient = async (
 ) => {
   const client = await createClientInDb(clientData, transaction);
 
-  console.log(client.id);
-
   await createWalletInDb(client.id, transaction);
 
   return { data: true };

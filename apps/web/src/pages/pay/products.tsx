@@ -5,7 +5,8 @@ import { ProductAttributes } from "commons";
 
 export const Products: React.FC<{
   handleProductSelect: (product: ProductAttributes) => void;
-}> = ({ handleProductSelect }) => {
+  disabled: boolean;
+}> = ({ handleProductSelect, disabled }) => {
   const { products } = useGetProducts();
 
   return (
@@ -24,6 +25,7 @@ export const Products: React.FC<{
               ${product.price.toFixed(2)}
             </p>
             <button
+              disabled={disabled}
               onClick={() => handleProductSelect(product)}
               className="mt-4 w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             >

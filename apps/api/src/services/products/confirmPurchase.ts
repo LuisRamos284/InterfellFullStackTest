@@ -13,27 +13,16 @@ export const confirmClientPurchase = async (
 
   const wallet = await getWalletByClientIdFromDb(clientId, transaction);
 
-  // TODO HANDLE ERROR
-  if (!wallet) {
-    return false;
-  }
+  if (!wallet) throw new Error("Invalid Document");
 
   const purchase = await getPendingPurchaseByIdFromDb(token, transaction);
 
-  // TODO HANDLE ERROR
-  if (!purchase) {
-    return false;
-  }
+  if (!purchase) throw new Error("Invalid Purchase");
 
-  // TODO HANDLE ERROR
-  if (purchase.clientId !== clientId) {
-    return false;
-  }
+  if (purchase.clientId !== clientId) throw new Error("Invalid Purchase");
 
-  // TODO HANDLE ERROR
-  if (purchase.product.price > wallet.balance) {
-    return false;
-  }
+  if (purchase.product.price > wallet.balance)
+    throw new Error("You don't have enough balance to make this purchase");
 
   await updateWalletBalance(
     {

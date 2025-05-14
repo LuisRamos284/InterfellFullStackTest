@@ -16,8 +16,11 @@ import { Products } from "./products";
 import { makeApiMutation } from "../../hooks/useApi";
 import { useGetPendingOrders } from "../../hooks/useGetPendingOrders";
 import { OrdersHistory } from "./orders";
+import { useTriggerToast } from "../../hooks/useTriggerToast";
 
 export default function Pay() {
+  const [isLoading, setIsLoading] = useState(false);
+  const { triggerErrorToast } = useTriggerToast();
   const { clients } = useGetClients();
 
   const [selectedProduct, setSelectedProduct] =
@@ -34,6 +37,7 @@ export default function Pay() {
     product: ProductAttributes
   ): Promise<void> => {
     if (!selectedClient) return;
+    setIsLoading(true);
     const { error } = await makeApiMutation({
       method: RouteMethod.POST,
       path: `${BaseRoute.PRODUCTS}/purchase`,
@@ -42,9 +46,11 @@ export default function Pay() {
         productId: product.id,
       },
     });
-
-    // TODO: HANDLE ERROR
-    if (error) return;
+    setIsLoading(false);
+    if (error) {
+      triggerErrorToast({ message: error.message.toString() });
+      return;
+    }
 
     refreshOrders();
     setSelectedProduct(product);
@@ -56,7 +62,7 @@ export default function Pay() {
     const { token } = payload;
 
     if (!selectedClient) return;
-
+    setIsLoading(true);
     const { error } = await makeApiMutation({
       method: RouteMethod.PUT,
       path: `${BaseRoute.PRODUCTS}/purchase/confirm`,
@@ -65,9 +71,11 @@ export default function Pay() {
         clientId: selectedClient.id,
       },
     });
-    // TODO: HANDLE ERROR
-    if (error) return;
-
+    setIsLoading(false);
+    if (error) {
+      triggerErrorToast({ message: error.message.toString() });
+      return;
+    }
     setShowConfirmation(false);
   };
 
@@ -110,13 +118,17 @@ export default function Pay() {
       </div>
 
       {selectedClient && !showConfirmation ? (
-        <Products handleProductSelect={handleProductSelect} />
+        <Products
+          handleProductSelect={handleProductSelect}
+          disabled={isLoading}
+        />
       ) : (
         <ConfirmPurchase
           handleCancel={handleCancel}
           handleConfirmPurchase={handleConfirmPurchase}
           selectedProduct={selectedProduct}
           purchaseComplete={purchaseComplete}
+          disabled={isLoading}
         />
       )}
 

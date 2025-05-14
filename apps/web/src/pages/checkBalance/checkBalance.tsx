@@ -11,8 +11,11 @@ import { Container } from "../../components/container";
 import { FormButtons } from "../../components/formButtons";
 import { BaseRoute, WalletWithEventsResponse } from "commons";
 import { makeApiGetRequest } from "../../hooks/useApi";
+import { useTriggerToast } from "../../hooks/useTriggerToast";
 
 export default function CheckBalance() {
+  const [isLoading, setIsLoading] = useState(false);
+  const { triggerErrorToast } = useTriggerToast();
   const {
     reset,
     register,
@@ -31,17 +34,17 @@ export default function CheckBalance() {
   };
 
   const onSubmit = async (payload: CheckBalancePayload): Promise<void> => {
+    setIsLoading(true);
     const { response, error } =
       await makeApiGetRequest<WalletWithEventsResponse>({
         path: `${BaseRoute.WALLET}/client`,
         query: payload,
       });
 
-    console.log(error);
-    //TODO HANDLE ERROR
     if (error) {
+      triggerErrorToast({ message: error.message.toString() });
       setWallet(null);
-      console.log(error);
+
       return;
     }
 
@@ -73,7 +76,7 @@ export default function CheckBalance() {
           errors={errors}
         />
 
-        <FormButtons handleClear={handleClear} />
+        <FormButtons handleClear={handleClear} disabled={isLoading} />
       </form>
 
       <Balance wallet={wallet} />

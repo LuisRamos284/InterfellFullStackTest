@@ -12,11 +12,13 @@ export const ConfirmPurchase: React.FC<{
   purchaseComplete: boolean;
   handleCancel: () => void;
   handleConfirmPurchase: (payload: PayPayload) => void;
+  disabled: boolean;
 }> = ({
   selectedProduct,
   handleCancel,
   handleConfirmPurchase,
   purchaseComplete,
+  disabled,
 }) => {
   const {
     register,
@@ -60,6 +62,7 @@ export const ConfirmPurchase: React.FC<{
             </div>
             <div className="flex justify-between">
               <button
+                disabled={disabled}
                 onClick={handleCancel}
                 className="px-4 py-2 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition-colors"
               >
@@ -67,7 +70,7 @@ export const ConfirmPurchase: React.FC<{
               </button>
               <button
                 type="submit"
-                disabled={token?.length !== 6}
+                disabled={token?.length !== 6 || disabled}
                 className={`px-4 py-2 rounded-md transition-colors ${
                   token?.length === 6
                     ? "bg-blue-600 text-white hover:bg-blue-700"

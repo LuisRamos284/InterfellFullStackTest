@@ -20,13 +20,11 @@ export const createPurchaseOrder = async (
 
   const client = await getClientByIdFromDb(clientId);
 
-  // TODO  Handle error
-  if (!client) return false;
+  if (!client) throw new Error("Invalid clientId");
 
   const product = await getProductByIdFromDb(productId);
 
-  // TODO  Handle error
-  if (!product) return false;
+  if (!product) throw new Error("Invalid Product");
 
   await wrappedSendMail({
     from: `"Interfell" <${process.env.EMAIL_USERNAME}>`,

@@ -86,11 +86,6 @@ async function doFetch<T>(
       data: body,
     });
 
-    // Catch Auth errors
-    if (response.status !== 200 && response.status !== 201) {
-      console.log("TODO");
-    }
-
     return { response: response.data, error: null };
   } catch (error) {
     console.log(error);

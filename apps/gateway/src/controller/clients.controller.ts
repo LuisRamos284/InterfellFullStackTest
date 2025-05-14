@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { BaseRoute } from "commons";
 import { handleError } from "../utils/http";
 import { HttpControllerRequest } from "./types";
@@ -49,6 +49,8 @@ export const registerClient = async ({
 
     res.json(response.data);
   } catch (error) {
+    console.log((error as AxiosError).response?.data);
+
     handleError({
       defaultMessage,
       error,
